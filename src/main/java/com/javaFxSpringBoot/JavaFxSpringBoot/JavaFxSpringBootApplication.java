@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 public class JavaFxSpringBootApplication extends Application {
 
 	private ConfigurableApplicationContext springContext;
-	private Parent root;
 
 	@Override
 	public void init() {
@@ -25,8 +24,7 @@ public class JavaFxSpringBootApplication extends Application {
 			System.out.println(
 					"**************************************************INIT*****************************************");
 			springContext = SpringApplication.run(JavaFxSpringBootApplication.class);
-			System.out.println(1);
-			System.out.println(4);
+
 		} catch (Exception e) {
 
 		}
@@ -43,28 +41,58 @@ public class JavaFxSpringBootApplication extends Application {
 
 		try {
 
-			// Player player = new Player("file:C:/EDIT/MyEdits/Shobha.mp4");
+			FileService fileRepo = new FileService();
+			
+			String path1 = "C:/EDIT/MyEdits/Shobha.mp4";
+			String path = "C:/EDIT/MyEdits/RhodesPark.mp4";
 
-			System.out.println("**************************************************START*****************************************");
-			System.out.println(0);
-			MyPlayer player = new MyPlayer("file:C:/EDIT/MyEdits/Shobha.mp4");
-			System.out.println(1);
-			Scene scene = new Scene(player, 1920, 1080, Color.BLACK);
-			System.out.println(2);
-			primaryStage.setScene(scene);
-			System.out.println(3);
-			primaryStage.show();
-			System.out.println(4);
+			// String path = "/home/pi/niranjan/Shobha.mp4";
+			System.out.println(
+					"**************************************************START*****************************************");
+
+			playVideo(primaryStage, path1);	
+			
+			
+			
+			//playVideo(primaryStage, path);	
+		
+//			MyPlayer player = new MyPlayer(path);
+//
+//			Scene scene = new Scene(player, 1920, 1080, Color.BLACK);
+//
+//			primaryStage.setScene(scene);
+//
+//			primaryStage.show();
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
-		
+
 	}
 
 	@Override
 	public void stop() throws Exception {
 		springContext.stop();
+	}
+
+	public static void playVideo(Stage primaryStage, String path) {
+
+		try {
+
+			MyPlayer player = new MyPlayer(path);
+
+			Scene scene = new Scene(player, 1920, 1080, Color.BLACK);
+
+			primaryStage.setScene(scene);
+
+			primaryStage.show();
+			
+			
+			//primaryStage.close();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 }

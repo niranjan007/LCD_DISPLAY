@@ -14,33 +14,60 @@ public class MyPlayer extends BorderPane {
 	MediaPlayer player;
 	MediaView view;
 	Pane pane;
+	static boolean playing = false;
 
 	public MyPlayer(String sfile) {
 
 		try {
 
-			System.out.println(0.1);
-			String file = new File("C:/EDIT/MyEdits/RhodesPark.mp4").toURI().toString();
-			System.out.println("**********" + file +"***********************************");
+			// String file = new File("C:/EDIT/MyEdits/RhodesPark.mp4").toURI().toString();
+			String file = new File(sfile).toURI().toString();
+			System.out.println("**********" + file + "***********************************");
 			media = new Media(file);
-			System.out.println(0.2);
+
 			player = new MediaPlayer(media);
-			System.out.println(0.3);
+
 			view = new MediaView(player);
-			System.out.println(0.4);
+
 			// view.setMediaPlayer(player);
-            pane = new Pane();
-			System.out.println(0.5);
+			pane = new Pane();
+
 			pane.getChildren().add(view);
-			System.out.println(0.6);
+
 			setCenter(pane);
-			System.out.println(0.7);
+         
+			 if( !playing ) {
+				   System.out.println("Now i am about to play");
+			   }
+						
 			player.play();
 			
+			
+			player.setOnEndOfMedia(new Runnable() {
+		
+				public void run() {
+					playing = true;
+				
+				}
+				
+			});
+			
+		   if( playing ) {
+			   System.out.println("Now i am not playing");
+		   }
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
+	}
+
+	public boolean isPlaying() {
+		return playing;
+	}
+
+	public void setPlaying(boolean playing) {
+		this.playing = playing;
 	}
 
 }
